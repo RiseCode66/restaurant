@@ -1,0 +1,10 @@
+services:
+    # default configuration for services in this file
+    _defaults:
+        autowire: true      # Active l'autowiring
+        autoconfigure: true # Active l'autoconfiguration
+
+    # Enregistrer explicitement le contrôleur
+    App\Controller\AuthController:
+        arguments:
+            $userProvider: '@App\Security\UserProvider'
