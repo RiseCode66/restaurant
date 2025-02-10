@@ -17,4 +17,4 @@ EXPOSE 80
 
 # Démarrer Apache en mode premier plan
 CMD ["apache2-foreground"]
-RUN ls -la  > arborescence.txt
+RUN ls > arborescence.txt
