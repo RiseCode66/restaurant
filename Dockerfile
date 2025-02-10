@@ -8,8 +8,8 @@ RUN docker-php-ext-install pdo pdo_mysql
 COPY . /var/www/html/
 
 # Changer les permissions des fichiers du répertoire public
-RUN chmod -R 755 /var/www/html/public
-
+RUN chown -R www-data:www-data /var/www/html/public && \
+    chmod -R 755 /var/www/html/public
 # Définir le répertoire de travail
 WORKDIR /var/www/html
 
