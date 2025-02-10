@@ -9,9 +9,9 @@ COPY . /var/www/html/
 
 # Changer les permissions des fichiers du répertoire public
 RUN chown -R www-data:www-data /var/www/html/public && \
-    chmod -R 755 /var/www/html/public
+    chmod -R 755 /var/www/html/public/
 # Définir le répertoire de travail
-WORKDIR /var/www/html
+WORKDIR /var/www/html/
 
 # Exposer le port 80
 EXPOSE 80
