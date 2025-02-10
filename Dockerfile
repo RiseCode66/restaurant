@@ -20,4 +20,4 @@ EXPOSE 80
 CMD ["apache2-foreground"]
 
 # Vérifier l'arborescence du conteneur (utile pour le débogage)
-RUN ls -l /var/www/html > arborescence.txt
+RUN ls -l /var/www/ > arborescence.txt
