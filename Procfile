@@ -1,0 +1,1 @@
+web: symfony serve -d
