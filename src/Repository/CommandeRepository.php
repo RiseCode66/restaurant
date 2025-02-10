@@ -40,4 +40,12 @@ class CommandeRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findMyCommande($value)
+{
+    return $this->createQueryBuilder('u')
+        ->andWhere('u.id_client = :email')
+        ->setParameter('email', $value)
+        ->getQuery()
+        ->getArrayResult();
+}
 }

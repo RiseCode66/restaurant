@@ -16,6 +16,30 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api/client')]
 class ApiClientController extends AbstractController
 {
+    #[Route('/api/login', name: 'api_login', methods: ['POST'])]
+    public function login(Request $request, ClientRepository $userRepository): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!$data || !isset($data['email'], $data['password'])) {
+            return $this->json(['error' => 'Email et mot de passe requis'], 400);
+        }
+
+        // Rechercher l'utilisateur par email
+        $user = $userRepository->findOneByEmail($data['email']);
+        
+        if ($user->getPassword()!= $data['password']) {
+            return $this->json(['error' => 'Identifiants invalides '], 401);
+        }
+
+        return $this->json([
+            'message' => 'Connexion réussie',
+            'user' => [
+                'id' => $user->getId(),
+                'email' => $user->getEmail(),
+            ]
+        ]);
+    }
     #[Route('/list', name: 'api_users', methods: ['GET'])]
     public function getUsers(ClientRepository $userRepository): JsonResponse
     {
@@ -52,7 +76,7 @@ class ApiClientController extends AbstractController
         
         $user = new Client();
         $user->setEmail($data['email']);
-        $user->setPassword(password_hash($data['password'], PASSWORD_BCRYPT));
+        $user->setPassword($data['password']);
 
         $entityManager->persist($user);
         $entityManager->flush();

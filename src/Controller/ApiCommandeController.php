@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Commande;
+use App\Repository\ClientRepository;
 use App\Repository\CommandeRepository;
 use App\Repository\PlatRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,24 +17,43 @@ final class ApiCommandeController extends AbstractController
     private EntityManagerInterface $entityManager;
     private CommandeRepository $commandeRepository;
     private PlatRepository $platRepository;
+    private ClientRepository $clientRepository;
 
     public function __construct(EntityManagerInterface $entityManager, 
                                 CommandeRepository $commandeRepository,
-                                PlatRepository $platRepository)
+                                PlatRepository $platRepository,
+                                ClientRepository $clientRepository)
     {
         $this->entityManager = $entityManager;
         $this->commandeRepository = $commandeRepository;
         $this->platRepository = $platRepository;
+        $this->clientRepository = $clientRepository; // Ajout de l'assignation ici
     }
+
     #[Route('/', methods: ['GET'])]
     public function index(CommandeRepository $commandeRepository): JsonResponse
     {
         return $this->json($commandeRepository->findAll(), 200, [], ['groups' => 'user:read']);
     }
+
     #[Route('/get', methods: ['GET'])]
     public function listCommande(): JsonResponse
     {
         $plats = $this->commandeRepository->findAll();
+        $platsData = array_map(fn(Commande $plat) => [
+            'id' => $plat->getId(),
+            'plat' => $plat->getPlat(),
+            'client' => $plat->getClient(),
+            'date' => $plat->getDate(),
+            'etat' => $plat->getEtat()
+        ], $plats);
+
+        return $this->json($platsData);
+    }
+    #[Route('/MyCommande/{id<\d+>}', methods: ['GET'])]
+    public function myCommande($id): JsonResponse
+    {
+        $plats = $this->commandeRepository->findMyCommande($id);
         $platsData = array_map(fn(Commande $plat) => [
             'id' => $plat->getId(),
             'plat' => $plat->getPlat(),
@@ -60,12 +79,16 @@ final class ApiCommandeController extends AbstractController
         if (!$plat) {
             return $this->json(['message' => 'Plat introuvable'], 404);
         }
+        $client = $this->clientRepository->find($data['id_client']);
+        if (!$client) {
+            return $this->json(['message' => 'Client introuvable'], 404);
+        }
 
         $commande = new Commande();
         $commande->setPlat($plat);
-        $commande->setDate(new \DateTime($data['date']));
+        $commande->setDate(new \DateTime($data['date'])); // Date envoyée par le frontend
         $commande->setEtat(0); // Par défaut, l'état est 0 (en attente)
-
+        $commande->setClient($client);
         $this->entityManager->persist($commande);
         $this->entityManager->flush();
 

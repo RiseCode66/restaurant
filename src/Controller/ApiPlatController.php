@@ -54,8 +54,22 @@ final class ApiPlatController extends AbstractController
     }
 
     // 🟢 Lister tous les plats
-    #[Route('/', name: 'list', methods: ['GET'])]
+    #[Route('/', methods: ['GET'])]
     public function listPlats(): JsonResponse
+    {
+        $plats = $this->platRepository->findAll();
+
+        $platsData = array_map(fn(Plat $plat) => [
+            'id' => $plat->getId(),
+            'nom' => $plat->getNom(),
+            'prix' => $plat->getPrix(),
+            'recette' => $plat->getRecette(),
+        ], $plats);
+
+        return $this->json($platsData);
+    }
+    #[Route('/get', methods: ['GET'])]
+    public function listPlat(): JsonResponse
     {
         $plats = $this->platRepository->findAll();
 

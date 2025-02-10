@@ -66,14 +66,28 @@ class Commande
         return $this;
     }
 
-    public function getEtat(): int
-    {
-        return $this->etat;
-    }
 
     public function setEtat(int $etat): self
     {
         $this->etat = $etat;
         return $this;
+    }
+    const ETAT_EN_ATTENTE = 0;
+    const ETAT_VALIDE = 1;
+    const ETAT_LIVREE = 2;
+
+
+    public function getEtat()
+    {
+        switch ($this->etat) {
+            case self::ETAT_EN_ATTENTE:
+                return 'En attente';
+            case self::ETAT_VALIDE:
+                return 'Validée';
+            case self::ETAT_LIVREE:
+                return 'Livrée';
+            default:
+                return 'Inconnu';
+        }
     }
 }
