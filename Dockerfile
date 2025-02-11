@@ -21,7 +21,6 @@ COPY composer.json composer.lock ./
 COPY . ./
 RUN composer require symfony/debug-bundle --dev
 RUN composer require symfony/web-profiler-bundle --dev
-RUN composer require symfony
 RUN composer require symfony/maker-bundle --dev
 RUN composer install --no-dev --optimize-autoloader --prefer-dist
 # Modifier le DocumentRoot d'Apache pour pointer vers public/
