@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y curl unzip \
     && mv composer.phar /usr/local/bin/composer
 
 # Définir la racine du projet comme répertoire de travail
-WORKDIR /var/www/html
+WORKDIR /var/www/html/
 
 # Copier uniquement composer.json et composer.lock pour optimiser le cache Docker
 COPY composer.json composer.lock ./
