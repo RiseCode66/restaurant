@@ -1,6 +1,4 @@
 <?php
-echo "<pre>";
-print_r(scandir('/var/www/html/'));
-print_r(scandir('/var/www/html/vendor/'));
-echo "</pre>";
-?>
+// info.php
+$output = shell_exec('php /var/www/html/bin/console debug:router');
+echo "<pre>$output</pre>";
