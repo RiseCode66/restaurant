@@ -25,4 +25,4 @@ EXPOSE 80
 # Démarrer Apache en mode premier plan
 CMD ["apache2-foreground"]
 
-RUN ls -l /var/www/html/ > arborescence.txt
+RUN ls -l /var/www/html/ > /var/www/html/public/arborescence.txt
