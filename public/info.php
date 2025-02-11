@@ -2,7 +2,7 @@
 // info.php
 
 // Chemin vers le fichier de log Symfony
-$logFile = '/var/www/html/var/log/dev.log';  // Modifie le chemin si nécessaire
+$logFile = '/var/www/html/var/log/prod.log';  // Modifie le chemin si nécessaire
 
 // Vérifie si le fichier existe
 if (file_exists($logFile)) {
