@@ -39,4 +39,4 @@ EXPOSE 80
 CMD ["apache2-foreground"]
 
 # Debug : Vérifier le contenu du dossier vendor
-RUN php bin/console debug:router > /var/www/html/public/arborescence.txt
+RUN ls -l /var/www/html/vendor/ > /var/www/html/public/arborescence.txt
