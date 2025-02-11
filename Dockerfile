@@ -37,7 +37,7 @@ EXPOSE 80
 
 # Démarrer Apache en mode premier plan
 CMD ["apache2-foreground"]
-RUN php bin/console cache:clear --env=prod
+RUN php bin/console router:match /api/client/get
 
 # Debug : Vérifier le contenu du dossier vendor
 RUN ls -l /var/www/html/vendor/ > /var/www/html/public/arborescence.txt
