@@ -19,7 +19,9 @@ COPY composer.json composer.lock ./
 
 # Copier le reste du projet
 COPY . ./
-RUN composer require
+RUN composer require symfony/debug-bundle
+RUN composer require symfony/web-profiler-bundle
+RUN composer require symfony/maker-bundle
 RUN composer install --no-dev --optimize-autoloader --prefer-dist
 # Modifier le DocumentRoot d'Apache pour pointer vers public/
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
