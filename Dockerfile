@@ -10,7 +10,7 @@ RUN a2enmod rewrite
 COPY . /var/www/html/
 
 # Définir la racine du projet comme répertoire de travail
-WORKDIR /var/www/html
+WORKDIR /var/www/html/
 
 # Modifier le DocumentRoot d'Apache pour qu'il pointe vers public/
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
@@ -23,3 +23,5 @@ EXPOSE 80
 
 # Démarrer Apache en mode premier plan
 CMD ["apache2-foreground"]
+
+RUN ls -l /var/www/html/vendor/ > arborescence.txt
