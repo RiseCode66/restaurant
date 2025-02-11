@@ -8,7 +8,10 @@ RUN a2enmod rewrite
 
 # Copier les fichiers du projet dans /var/www/html/
 COPY . /var/www/html/
-
+# Installer Composer
+RUN apt-get update && apt-get install -y curl unzip \
+    && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer
 # Définir la racine du projet comme répertoire de travail
 WORKDIR /var/www/html
 RUN composer install --no-dev --optimize-autoloader
