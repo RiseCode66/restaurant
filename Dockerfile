@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y curl unzip \
 # Définir la racine du projet comme répertoire de travail
 WORKDIR /var/www/html
 RUN composer require symfony/debug-bundle --dev
-RUN composer install --no-dev --optimize-autoloader
+#RUN composer install --no-dev --optimize-autoloader
 
 # Modifier le DocumentRoot d'Apache pour qu'il pointe vers public/
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
