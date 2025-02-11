@@ -1,4 +1,4 @@
 <?php
 // info.php
-$output = shell_exec('php /var/www/html/bin/console debug:router');
+$output = shell_exec('php bin/console router:match /api/client/get');
 echo "<pre>$output</pre>";
