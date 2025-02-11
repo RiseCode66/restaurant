@@ -19,7 +19,7 @@ COPY composer.json composer.lock ./
 
 # Copier le reste du projet
 COPY . ./
-RUN composer install --no-dev --optimize-autoloader --prefer-dist
+RUN composer install
 # Modifier le DocumentRoot d'Apache pour pointer vers public/
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
